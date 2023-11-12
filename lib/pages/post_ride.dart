@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class PostRide extends StatefulWidget {
   const PostRide({
@@ -32,6 +34,8 @@ class _PostRideState extends State<PostRide> {
   String dlNumber = '';
   String place = '';
 
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +59,9 @@ class _PostRideState extends State<PostRide> {
                     return null;
                   },
                   onChanged: (value) {
-                    carType = value;
+                    setState(() {
+                      carType = value;
+                    });
                   },
                 ),
                 TextFormField(
@@ -67,7 +73,9 @@ class _PostRideState extends State<PostRide> {
                     return null;
                   },
                   onChanged: (value) {
-                    licensePlate = value;
+                    setState(() {
+                      licensePlate = value;
+                    });
                   },
                 ),
                 TextFormField(
@@ -79,7 +87,9 @@ class _PostRideState extends State<PostRide> {
                     return null;
                   },
                   onChanged: (value) {
-                    dlNumber = value;
+                    setState(() {
+                      dlNumber = value;
+                    });
                   },
                 ),
                 TextFormField(
@@ -91,7 +101,9 @@ class _PostRideState extends State<PostRide> {
                     return null;
                   },
                   onChanged: (value) {
-                    place = value;
+                    setState(() {
+                      place = value;
+                    });
                   },
                 ),
                 Padding(
@@ -113,25 +125,8 @@ class _PostRideState extends State<PostRide> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        // Process the form data
-                        // For demonstration purposes, just print the data
-                        print('Car Type: $carType');
-                        print('License Plate: $licensePlate');
-                        print('DL Number: $dlNumber');
-                        print('Place: $place');
-                        print('From: ${widget.fromLocation}');
-                        print('To: ${widget.toLocation}');
-                        print('Date: ${widget.selectedDate.toLocal()}');
-                        print('Time: ${widget.selectedTime.format(context)}');
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text('Processing Data')),
-                        );
-                      }
-                    },
-                    child: const Text('Submit'),
+                    onPressed: _isLoading ? null : _submitForm,
+                    child: _isLoading ? const CircularProgressIndicator() : const Text('Submit'),
                   ),
                 ),
               ],
@@ -139,6 +134,103 @@ class _PostRideState extends State<PostRide> {
           ),
         ),
       ),
+    );
+  }
+
+  void _submitForm() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      // Process the form data
+      print('Car Type: $carType');
+      print('License Plate: $licensePlate');
+      print('DL Number: $dlNumber');
+      print('Place: $place');
+      print('From: ${widget.fromLocation}');
+      print('To: ${widget.toLocation}');
+      print('Date: ${widget.selectedDate.toLocal()}');
+      print('Time: ${widget.selectedTime.format(context)}');
+
+      // Simulate the API call delay
+      await Future.delayed(const Duration(seconds: 2));
+
+      // Call the controller to post the ride
+      await _postRide();
+
+      // Show success popup
+      _showSuccessPopup();
+
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Future<bool> _postRide() async {
+    final Uri uri = Uri.parse('http://54.196.10.40:8080/ride/post');
+
+    final Map<String, dynamic> requestBody = {
+    'user_id': 6,
+    'car_type': carType,
+    'license_plate': licensePlate,
+    'dl': dlNumber,
+    'date_time': widget.selectedDate
+        .add(Duration(hours: widget.selectedTime.hour, minutes: widget.selectedTime.minute))
+        .toUtc()
+        .toIso8601String(),
+    'price': 100,
+    'from_address': widget.fromLocation,
+    'from_lat': 79.2131143,
+    'from_long': 81.9284021,
+    'to_address': widget.toLocation,
+      'to_lat': 86.2131143,
+      'to_long': 81.92841313,
+    };
+
+    try {
+      final response = await http.post(
+        uri,
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        // Handle successful response
+        print('Ride posted successfully');
+        return true;
+      } else {
+        // Handle error response
+        print('Failed to post ride. Status Code: ${response.statusCode}');
+        print('Response Body: ${response.body}');
+        return false;
+      }
+    } catch (error) {
+      // Handle network or unexpected errors
+      print('Error posting ride: $error');
+      return false;
+    }
+  }
+
+  void _showSuccessPopup() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Success'),
+          content: const Text('Ride posted successfully!'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+                Navigator.pop(context); // Go back to the home screen
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

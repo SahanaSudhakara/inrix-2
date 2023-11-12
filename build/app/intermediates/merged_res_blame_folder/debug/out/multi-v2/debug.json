@@ -3049,7 +3049,7 @@
                     }
                 },
                 {
-                    "source": "/Users/sahanakuchur/Inrix_frontend/android/app/src/main/res/values/styles.xml",
+                    "source": "/Users/sahanakuchur/Documents/UntitledFinals/android/app/src/main/res/values/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
@@ -4317,7 +4317,7 @@
             "outputFile": "com.example.cargogo.app-merged_res-15:/values-night-v8_values-night-v8.arsc.flat",
             "map": [
                 {
-                    "source": "/Users/sahanakuchur/Inrix_frontend/android/app/src/main/res/values-night/styles.xml",
+                    "source": "/Users/sahanakuchur/Documents/UntitledFinals/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

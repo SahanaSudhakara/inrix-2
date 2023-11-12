@@ -4,7 +4,7 @@
             "outputFile": "com.example.cargogo.app-mergeDebugResources-13:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/Users/sahanakuchur/Inrix_frontend/android/app/src/main/res/values-night/styles.xml",
+                    "source": "/Users/sahanakuchur/Documents/UntitledFinals/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
