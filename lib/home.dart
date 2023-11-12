@@ -2,6 +2,7 @@ import 'package:cargogo/pages/post_ride.dart';
 import 'package:cargogo/pages/search_ride.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+// import 'package:cargogo/search_result.dart';
 
 
 class Home extends StatefulWidget {

@@ -14,7 +14,7 @@ class SearchRideContent extends StatelessWidget {
       appBar: AppBar(
         title: Text('Google Maps'),
       ),
-      body: GoogleMap(
+      body: const GoogleMap(
         initialCameraPosition: CameraPosition(
           target: LatLng(37.7749, -122.4194), // Example coordinates
           zoom: 10.0,
@@ -23,4 +23,6 @@ class SearchRideContent extends StatelessWidget {
     );
   }
 }
+
+
 
