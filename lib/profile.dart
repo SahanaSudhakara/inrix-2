@@ -11,22 +11,24 @@ class ProfilePage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+           mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+          
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               radius: 50,
               backgroundImage: AssetImage('assets/profile_image.jpg'), // Use your image path here
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'John Doe',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            Text(
+            const Text(
               'john.doe@example.com',
               style: TextStyle(color: Colors.grey),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
                 // Navigate to the edit profile page
@@ -35,7 +37,7 @@ class ProfilePage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => EditProfilePage()),
                 );
               },
-              child: Text('Edit Profile'),
+              child: const Text('Edit Profile'),
             ),
           ],
         ),
@@ -51,8 +53,8 @@ class EditProfilePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Edit Profile'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [

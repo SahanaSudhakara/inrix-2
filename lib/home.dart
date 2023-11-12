@@ -1,6 +1,8 @@
 import 'package:cargogo/pages/post_ride.dart';
 import 'package:cargogo/pages/search_ride.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 
 class Home extends StatefulWidget {
   @override
@@ -38,21 +40,30 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Screen'),
-      ),
-      body: Padding(
+      
+      body: Container(
+        decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.blueGrey, Colors.lightBlueAccent],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            const SizedBox(height: 200.0),
             // "From" Input Field
-            const TextField(
-              decoration: InputDecoration(
+            const  TextField(
+              decoration:  InputDecoration(
                 labelText: 'From',
                 border: OutlineInputBorder(),
               ),
+             
+
+                
             ),
             const SizedBox(height: 16.0),
 
@@ -70,22 +81,71 @@ class _HomeState extends State<Home> {
               width: 100, // Set the desired width
               child: ElevatedButton(
                 onPressed: () => _selectDate(context),
-                child: Text('Select Date'),
+                 style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                ),
+                child: const Text('Select Date',
+                style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 18.0,
+                    
+                  ),),
               ),
             ),
             const SizedBox(height: 8.0),
-            Text('Selected Date: ${selectedDate.toLocal()}'),
+            // Text('Selected Date: ${selectedDate.toLocal()}'),
+           
 
             // Select Time Button
             Container(
               width: 100, // Set the desired width
               child: ElevatedButton(
                 onPressed: () => _selectTime(context),
-                child: Text('Select Time'),
+                 style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                ),
+                child: const Text('Select Time',
+                style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 18.0,
+                    
+                  ),),
               ),
             ),
             const SizedBox(height: 8.0),
-            Text('Selected Time: ${selectedTime.format(context)}'),
+             Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: null,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  'Selected Date: ${DateFormat('yyyy-MM-dd').format(selectedDate.toLocal())}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+               Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: null,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  'Selected Time: ${selectedTime.format(context)}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            // Text('Selected Time: ${selectedTime.format(context)}'),
 
             // Search Button
             Container(
@@ -97,7 +157,10 @@ class _HomeState extends State<Home> {
                     MaterialPageRoute(builder: (context) => SearchRideContent()),
                   );
                 },
-                child: Text('Search'),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.teal 
+                          )          ),
+                child: const Text('Search Ride'),
               ),
             ),
             const SizedBox(height: 16.0),
@@ -123,7 +186,10 @@ class _HomeState extends State<Home> {
                   ),
                 );
               },
-              child: Text('New Ride'),
+               style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.teal  
+              ) ),  
+              child: const Text('New Ride'),
             ),
           ],
         ),
